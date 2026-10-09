@@ -1,4 +1,4 @@
-/**
+/*
 * @license Apache-2.0
 *
 * Copyright (c) 2026 The Stdlib Authors.
@@ -16,20 +16,27 @@
 * limitations under the License.
 */
 
-'use strict';
+// TypeScript Version: 4.1
 
-// MODULES //
+/// <reference types="https://cdn.jsdelivr.net/gh/stdlib-js/types@main/index.d.ts"/>
 
-var incrmse = require( '@stdlib/stats-incr-mse' );
-var isnan = require( '@stdlib/math-base-assert-is-nan' );
-
-
-// MAIN //
+/**
+* If provided input values, the accumulator function returns an updated mean squared error. If not provided input values, the accumulator function returns the current mean squared error.
+*
+* @param x - input value
+* @param y - input value
+* @returns mean squared error or null
+*/
+type accumulator = ( x?: number, y?: number ) => number | null;
 
 /**
 * Returns an accumulator function which incrementally computes the mean squared error, ignoring `NaN` values.
 *
-* @returns {Function} accumulator function
+* ## Notes
+*
+* -   If either input value is `NaN`, the accumulator function ignores the input value and returns the current mean squared error.
+*
+* @returns accumulator function
 *
 * @example
 * var accumulator = incrnanmse();
@@ -49,27 +56,9 @@ var isnan = require( '@stdlib/math-base-assert-is-nan' );
 * m = accumulator();
 * // returns 25.0
 */
-function incrnanmse() {
-	var mse = incrmse();
-	return accumulator;
-
-	/**
-	* If provided input values, the accumulator function returns an updated mean squared error. If not provided input values, the accumulator function returns the current mean squared error.
-	*
-	* @private
-	* @param {number} [x] - input value
-	* @param {number} [y] - input value
-	* @returns {(number|null)} mean squared error or null
-	*/
-	function accumulator( x, y ) {
-		if ( arguments.length === 0 || isnan( x ) || isnan( y ) ) {
-			return mse();
-		}
-		return mse( x, y );
-	}
-}
+declare function incrnanmse(): accumulator;
 
 
 // EXPORTS //
 
-module.exports = incrnanmse;
+export = incrnanmse;
